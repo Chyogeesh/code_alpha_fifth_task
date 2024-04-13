@@ -1,0 +1,42 @@
+document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById("searchInput");
+    const bookList = document.getElementById("bookList");
+
+    // Dummy book data
+    const books = [
+        { title: "Book 1", author: "Author 1", category: "Fiction" },
+        { title: "Book 2", author: "Author 2", category: "Non-fiction" },
+        { title: "Book 3", author: "Author 3", category: "Fantasy" },
+        { title: "Book 4", author: "Author 4", category: "Science" },
+        { title: "Book 5", author: "Author 5", category: "Mystery" }
+    ];
+
+    // Function to render book items
+    function renderBooks(books) {
+        bookList.innerHTML = "";
+        books.forEach(book => {
+            const bookItem = document.createElement("div");
+            bookItem.classList.add("book");
+            bookItem.innerHTML = `
+                <h3>${book.title}</h3>
+                <p><strong>Author:</strong> ${book.author}</p>
+                <p><strong>Category:</strong> ${book.category}</p>
+            `;
+            bookList.appendChild(bookItem);
+        });
+    }
+
+    // Initial rendering
+    renderBooks(books);
+
+    // Event listener for search input
+    searchInput.addEventListener("input", function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredBooks = books.filter(book =>
+            book.title.toLowerCase().includes(searchTerm) ||
+            book.author.toLowerCase().includes(searchTerm) ||
+            book.category.toLowerCase().includes(searchTerm)
+        );
+        renderBooks(filteredBooks);
+    });
+});
